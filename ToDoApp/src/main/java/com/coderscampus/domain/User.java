@@ -13,12 +13,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.coderscampus.security.Authorities;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="users")
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+@JsonIgnoreProperties({"authorities", "toDos"})
 public class User
 {
   private Long id;

@@ -5,11 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+@JsonIgnoreProperties({"user"})
 public class ToDo implements Comparable<ToDo>
 {
   private Long id;
@@ -64,24 +63,21 @@ public class ToDo implements Comparable<ToDo>
   @Override
   public int compareTo(ToDo toDo)
   {
-    // this sorting code doesn't work, it will need some TLC 
     int a = this.done.compareTo(toDo.done);
     if (a == 0)
     {
-      int b = this.priority.compareTo(toDo.priority);
-      if (b == 0)
-      {
-        return this.id.compareTo(toDo.id);
-      }
-      else
-      {
-        return b;
-      }
+      a = this.priority.compareTo(toDo.priority);
     }
-    else
+    if (a == 0)
     {
-      return a;
+      a = this.id.compareTo(toDo.id);
     }
+    return a;
+  }
+  @Override
+  public String toString()
+  {
+    return "ToDo [id=" + id + ", task=" + task + ", done=" + done + ", priority=" + priority + "]";
   }
   
   

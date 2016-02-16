@@ -2,6 +2,7 @@ package com.coderscampus.web;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,9 @@ public class ToDoController
     user = userRepo.findByUsername(user.getUsername());
     Set<ToDo> toDos = user.getToDos();
     
-    return new ResponseEntity<Collection<ToDo>>(toDos, HttpStatus.OK);
+    TreeSet<ToDo> sortedToDos = new TreeSet<ToDo>(toDos);
+    
+    return new ResponseEntity<Collection<ToDo>>(sortedToDos, HttpStatus.OK);
   }
   @RequestMapping(value="{id}", method=RequestMethod.GET)
   public ResponseEntity<ToDo> getTodo (@PathVariable Long id)
