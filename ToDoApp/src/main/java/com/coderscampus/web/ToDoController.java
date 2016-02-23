@@ -48,7 +48,7 @@ public class ToDoController
   @RequestMapping(value="", method=RequestMethod.GET)
   public ResponseEntity<Collection<ToDo>> getTodos (@AuthenticationPrincipal User user)
   {
-    user = userRepo.findByUsername(user.getUsername());
+    user = userRepo.findByUsername("test-user");
     Set<ToDo> toDos = user.getToDos();
     
     TreeSet<ToDo> sortedToDos = new TreeSet<ToDo>(toDos);
